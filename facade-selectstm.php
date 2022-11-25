@@ -70,3 +70,15 @@ and bindings as its second argument:
 */
 
 DB::insert('insert into users (id, name) values (?, ?)', [1, 'Marc']);
+
+
+//The update method
+
+/*
+The update method should be used to update existing records in the database. The number of rows affected by the statement is returned by the method:
+
+*/
+$affected = DB::update(
+    'update users set votes = 100 where name = ?',
+    ['Anita']
+);
