@@ -27,4 +27,9 @@ The select method will always return an array of results. Each result within the
 
 
 */
+//loop through users array
+$users = DB::select('select * from users');
 
+foreach ($users as $user) {
+    echo $user->name;
+}
