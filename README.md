@@ -41,3 +41,58 @@ Some managed database providers such as AWS and Heroku provide a single database
 For convenience, Laravel supports these URLs as an alternative to configuring your database with multiple configuration options. If the url (or corresponding DATABASE_URL environment variable) configuration option is present, it will be used to extract the database connection and credential information.
 
 </p>
+
+## Read and Write connections
+<p>
+Sometimes you may wish to use one database connection for SELECT statements, and another for INSERT, UPDATE, and DELETE statements. Laravel makes this a breeze, and the proper connections will always be used whether you are using raw queries, the query builder, or the Eloquent ORM.
+
+To see how read / write connections should be configured, let's look at this example:
+</p>
+<code>
+<pre>
+
+'mysql' => [
+    'read' => [
+        'host' => [
+            '192.168.1.1',
+            '196.168.1.2',
+        ],
+    ],
+    'write' => [
+        'host' => [
+            '196.168.1.3',
+        ],
+    ],
+    'sticky' => true,
+    'driver' => 'mysql',
+    'database' => 'database',
+    'username' => 'root',
+    'password' => '',
+    'charset' => 'utf8mb4',
+    'collation' => 'utf8mb4_unicode_ci',
+    'prefix' => '',
+],
+
+
+</pre>
+</code>
+
+<p>
+
+Note that three keys have been added to the configuration array: read, write and sticky. The read and write keys have array values containing a single key: host. The rest of the database options for the read and write connections will be merged from the main mysql configuration array.
+
+
+</p>
+
+<p>
+You only need to place items in the read and write arrays if you wish to override the values from the main mysql array. So, in this case, 192.168.1.1 will be used as the host for the "read" connection, while 192.168.1.3 will be used for the "write" connection. The database credentials, prefix, character set, and all other options in the main mysql array will be shared across both connections. When multiple values exist in the host configuration array, a database host will be randomly chosen for each request.
+
+</p>
+
+## The sticky option
+
+<p>
+
+The sticky option is an optional value that can be used to allow the immediate reading of records that have been written to the database during the current request cycle. If the sticky option is enabled and a "write" operation has been performed against the database during the current request cycle, any further "read" operations will use the "write" connection. This ensures that any data written during the request cycle can be immediately read back from the database during that same request. It is up to you to decide if this is the desired behavior for your application.
+
+</p>
