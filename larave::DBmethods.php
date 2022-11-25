@@ -107,3 +107,17 @@ DB::statement('drop table users');
  Sometimes you may want to execute an SQL statement without binding any values. You may use the DB facade's unprepared method to accomplish this:
 */
 DB::unprepared('update users set votes = 100 where name = "Dries"');
+
+
+//Implicit commits
+
+/*
+When using the DB facade's statement and unprepared methods within transactions you must be careful to avoid statements that cause implicit commits. 
+These statements will cause the database engine to indirectly commit the entire transaction, leaving Laravel unaware of the database's transaction 
+level. An example of such a statement is creating a database table:
+
+
+*/
+
+DB::unprepared('create table a (col varchar(1) null)');
+
