@@ -96,6 +96,7 @@ You only need to place items in the read and write arrays if you wish to overrid
 The sticky option is an optional value that can be used to allow the immediate reading of records that have been written to the database during the current request cycle. If the sticky option is enabled and a "write" operation has been performed against the database during the current request cycle, any further "read" operations will use the "write" connection. This ensures that any data written during the request cycle can be immediately read back from the database during that same request. It is up to you to decide if this is the desired behavior for your application.
 
 </p>
+
 ## Running SQL Queries
 
 <p>
