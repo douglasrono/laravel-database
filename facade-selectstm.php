@@ -82,3 +82,28 @@ $affected = DB::update(
     'update users set votes = 100 where name = ?',
     ['Anita']
 );
+
+//Running a delete statement
+
+/*
+The delete method should be used to delete records from the database. Like update, the number of rows affected will be returned by the method:
+*/
+
+$deleted = DB::delete('delete from users');
+
+//Running a general statement
+
+/*
+
+Some database statements do not return any value. For these types of operations, you may use the statement method on the DB facade:
+
+*/
+
+DB::statement('drop table users');
+
+//Running unprepared statement
+
+/*
+ Sometimes you may want to execute an SQL statement without binding any values. You may use the DB facade's unprepared method to accomplish this:
+*/
+DB::unprepared('update users set votes = 100 where name = "Dries"');
