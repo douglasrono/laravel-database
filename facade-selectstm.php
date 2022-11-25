@@ -21,9 +21,12 @@ class UserController extends Controller
 }
 
 /*
-The first argument passed to the select method is the SQL query, while the second argument is any parameter bindings that need to be bound to the query. Typically, these are the values of the where clause constraints. Parameter binding provides protection against SQL injection.
+The first argument passed to the select method is the SQL query, while the second argument is any parameter bindings 
+that need to be bound to the query. 
+Typically, these are the values of the where clause constraints. Parameter binding provides protection against SQL injection.
 
-The select method will always return an array of results. Each result within the array will be a PHP stdClass object representing a record from the database:
+The select method will always return an array of results. Each result within the array will be a PHP stdClass object
+representing a record from the database:
 
 
 */
@@ -33,3 +36,18 @@ $users = DB::select('select * from users');
 foreach ($users as $user) {
     echo $user->name;
 }
+
+//scalar method
+
+/*
+Sometimes your database query may result in a single, scalar value. Instead of being required to retrieve 
+the query's scalar result from a record object, Laravel allows you to retrieve this value directly using the scalar method:
+
+*/
+
+
+
+$burgers = DB::scalar(
+    "select count(case when food = 'burger' then 1 end) as burgers from menu"
+);
+
