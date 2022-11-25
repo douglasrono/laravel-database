@@ -51,3 +51,22 @@ $burgers = DB::scalar(
     "select count(case when food = 'burger' then 1 end) as burgers from menu"
 );
 
+// named binding
+
+/*
+
+Instead of using ? to represent your parameter bindings, you may execute a query using named bindings:
+
+*/
+
+$results = DB::select('select * from users where id = :id', ['id' => 1]);
+
+//Running an insert
+
+/*
+
+To execute an insert statement, you may use the insert method on the DB facade. Like select, this method accepts the SQL query as its first argument 
+and bindings as its second argument:
+*/
+
+DB::insert('insert into users (id, name) values (?, ?)', [1, 'Marc']);
